@@ -7,6 +7,19 @@ load_dotenv()
 
 # --- API Keys ---
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_BASE_URL = os.getenv("OPENAI_BASE_URL", "")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o")
+
+
+def get_openai_client():
+    """Return an OpenAI-compatible client for OpenAI or another provider."""
+    if not OPENAI_API_KEY:
+        return None
+    from openai import OpenAI
+    kwargs = {"api_key": OPENAI_API_KEY}
+    if OPENAI_BASE_URL:
+        kwargs["base_url"] = OPENAI_BASE_URL
+    return OpenAI(**kwargs)
 
 # --- Qdrant ---
 QDRANT_HOST = "localhost"
